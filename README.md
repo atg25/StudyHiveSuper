@@ -5,7 +5,7 @@
 Transform your messy class notes into AI-powered, peer-verified study resources. Built by students, for students.
 
 ## 🌐 Live Demo
-[View Landing Page](https://yourusername.github.io/StudyHive/)
+[View Landing Page](https://atg25.github.io/StudyHive/)
 
 ## 🎯 Project Overview
 
