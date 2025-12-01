@@ -449,21 +449,27 @@ app.get("/api/health", async (req, res) => {
   res.json(health);
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 StudyHive server running on http://localhost:${PORT}`);
-  console.log(`📝 API endpoint: http://localhost:${PORT}/api/generate-summary`);
-  console.log(
-    `🎙️ Podcast endpoint: http://localhost:${PORT}/api/generate-podcast`
-  );
-  console.log(`✅ Environment: ${process.env.NODE_ENV || "development"}`);
+// Export for Vercel serverless
+module.exports = app;
 
-  // Run initial cleanup
-  console.log("\n🧹 Running initial audio cleanup...");
-  cleanupOldFiles().catch((err) => console.error("Cleanup error:", err));
+// Only start server if running directly (not imported by Vercel)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 StudyHive server running on http://localhost:${PORT}`);
+    console.log(`📝 API endpoint: http://localhost:${PORT}/api/generate-summary`);
+    console.log(
+      `🎙️ Podcast endpoint: http://localhost:${PORT}/api/generate-podcast`
+    );
+    console.log(`✅ Environment: ${process.env.NODE_ENV || "development"}`);
 
-  // Schedule cleanup every 6 hours
-  setInterval(() => {
-    console.log("\n🧹 Running scheduled audio cleanup...");
+    // Run initial cleanup
+    console.log("\n🧹 Running initial audio cleanup...");
     cleanupOldFiles().catch((err) => console.error("Cleanup error:", err));
-  }, 6 * 60 * 60 * 1000);
-});
+
+    // Schedule cleanup every 6 hours
+    setInterval(() => {
+      console.log("\n🧹 Running scheduled audio cleanup...");
+      cleanupOldFiles().catch((err) => console.error("Cleanup error:", err));
+    }, 6 * 60 * 60 * 1000);
+  });
+}

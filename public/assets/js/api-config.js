@@ -10,7 +10,7 @@ const API_CONFIG = {
       // For now, return null to show demo-only mode
       return null;
     }
-    
+
     // If running in production (deployed), use the current origin
     if (
       window.location.hostname !== "localhost" &&
