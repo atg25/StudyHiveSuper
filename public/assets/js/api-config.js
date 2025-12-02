@@ -4,11 +4,12 @@
 const API_CONFIG = {
   // Use environment variable if set, otherwise detect from hostname
   getBaseURL() {
-    // GitHub Pages (static hosting) - needs deployed backend
+    // If running on GitHub Pages, point to deployed backend (Vercel)
     if (window.location.hostname.includes("github.io")) {
-      // TODO: Replace with your deployed backend URL (e.g., Render, Railway, etc.)
-      // For now, return null to show demo-only mode
-      return null;
+      // TODO: Set to your Vercel deployment URL, e.g. https://studyhive.vercel.app
+      const PROD_BACKEND_URL = window.PROD_BACKEND_URL || "";
+      // If not set, stay in demo mode (no backend)
+      return PROD_BACKEND_URL || null;
     }
 
     // If running in production (deployed), use the current origin
@@ -27,7 +28,7 @@ const API_CONFIG = {
   },
 
   get IS_DEMO_MODE() {
-    return this.BASE_URL === null;
+    return !this.BASE_URL;
   },
 
   get SUMMARY_ENDPOINT() {
