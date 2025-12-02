@@ -257,6 +257,9 @@
       /* LOADING STATE */
       .loading {
         display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         padding: 3rem;
         font-family: "Space Grotesk", sans-serif;
@@ -265,7 +268,7 @@
       }
 
       .loading.active {
-        display: block;
+        display: flex;
       }
 
       .hexagon-spinner {
