@@ -760,10 +760,99 @@
             👎 <span id="notHelpfulCount">0</span> Not Helpful
           </button>
         </div>
+      </div>
+    </div>
 
-        <div class="card-nav">
-          <button class="card-nav-btn" id="prevCard">← Previous</button>
-          <button class="card-nav-btn" id="nextCard">Next →</button>
+    <!-- FLASHCARDS TAB -->
+    <div class="tab-content" id="flashcards">
+      <div class="flashcard-container">
+        <div
+          class="flashcard-header"
+          style="text-align: center; margin-bottom: 2rem"
+        >
+          <h3>📚 AI-Generated Flashcards</h3>
+          <p>Convert your notes into interactive study flashcards</p>
+        </div>
+
+        <div class="flashcard-controls" style="margin-bottom: 2rem;">
+          <button class="btn btn-primary" id="makeCardsBtn">
+            Generate Flashcards from Notes
+          </button>
+        </div>
+
+        <div id="flashcardLoading" class="loading" style="display: none">
+          <div class="hexagon-spinner">⬢</div>
+          <div>Generating flashcards...</div>
+        </div>
+
+        <div id="flashcardOutput" style="display: none">
+          <div
+            class="flashcard-wrapper"
+            style="perspective: 1000px; margin: 2rem auto; max-width: 500px"
+          >
+            <div class="flashcard" id="flashcard" style="cursor: pointer">
+              <div class="flashcard-face flashcard-front">
+                <div class="card-label">QUESTION</div>
+                <div id="cardQuestion">
+                  Click "Generate Flashcards" to start
+                </div>
+                <div class="card-corner">⬢</div>
+              </div>
+              <div class="flashcard-face flashcard-back">
+                <div class="card-label">ANSWER</div>
+                <div id="cardAnswer"></div>
+                <div class="card-corner">⬢</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="flashcard-nav"
+            style="
+              display: flex;
+              justify-content: center;
+              gap: 1rem;
+              align-items: center;
+            "
+          >
+            <button class="card-nav-btn" id="prevCard">← Previous</button>
+            <span
+              id="cardCounter"
+              style="color: var(--honey); font-weight: bold"
+              >1 / 5</span
+            >
+            <button class="card-nav-btn" id="nextCard">Next →</button>
+          </div>
+
+          <p style="text-align: center; margin-top: 1rem; color: #888">
+            Click the card to flip it!
+          </p>
+        </div>
+
+        <div
+          class="flashcard-info"
+          style="
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 3px solid var(--white);
+            background: var(--gray);
+          "
+        >
+          <h4 style="margin-bottom: 1rem">💡 How it works:</h4>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 0.5rem">
+              ✓ Enter your notes in the AI Summaries tab
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              ✓ Click "Generate Flashcards" to create Q&A pairs
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              ✓ Click cards to flip between question and answer
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              ✓ Use arrows to navigate through your deck
+            </li>
+          </ul>
         </div>
       </div>
     </div>

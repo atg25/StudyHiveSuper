@@ -232,10 +232,15 @@ exportBtn.addEventListener("click", () => {
 });
 
 // Generate Flashcards Button
-makeCardsBtn.addEventListener("click", () => {
-  currentFlashcards = sampleData[currentSubject].flashcards;
-  currentCardIndex = 0;
-  loadFlashcard();
+makeCardsBtn.addEventListener("click", async () => {
+  const notes = document.getElementById("notes").value;
+  const flashcardLoading = document.getElementById("flashcardLoading");
+  const flashcardOutput = document.getElementById("flashcardOutput");
+
+  if (!notes.trim()) {
+    showToast("Please enter notes in the AI Summaries tab first!");
+    return;
+  }
 
   // Switch to flashcards tab
   tabBtns.forEach((b) => b.classList.remove("active"));
@@ -243,7 +248,39 @@ makeCardsBtn.addEventListener("click", () => {
   tabBtns[1].classList.add("active");
   document.getElementById("flashcards").classList.add("active");
 
-  showToast(`Generated ${currentFlashcards.length} flashcards!`);
+  // Show loading state
+  flashcardLoading.style.display = "flex";
+  flashcardOutput.style.display = "none";
+
+  try {
+    const response = await fetch(`${API_CONFIG.BASE_URL}/api/generate-flashcards`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ notes }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to generate flashcards");
+    }
+
+    const data = await response.json();
+    currentFlashcards = data.flashcards || [];
+    currentCardIndex = 0;
+
+    if (currentFlashcards.length === 0) {
+      showToast("No flashcards could be generated from these notes");
+      return;
+    }
+
+    loadFlashcard();
+    flashcardOutput.style.display = "block";
+    showToast(`Generated ${currentFlashcards.length} flashcards!`);
+  } catch (error) {
+    console.error("Flashcard generation error:", error);
+    showToast("Error generating flashcards. Please try again.");
+  } finally {
+    flashcardLoading.style.display = "none";
+  }
 });
 
 // Flashcard Logic
