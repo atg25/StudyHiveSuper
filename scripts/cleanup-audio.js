@@ -6,7 +6,7 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-const AUDIO_DIR = path.join(__dirname, "audio");
+const AUDIO_DIR = path.join(__dirname, "..", "audio");
 const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
 const MAX_STORAGE_MB = 100; // Max 100MB total storage
 
