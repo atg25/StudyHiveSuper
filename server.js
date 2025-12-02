@@ -267,17 +267,9 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
       console.log(`Truncated to ${Buffer.byteLength(cleanText, "utf8")} bytes`);
     }
 
-    // Prefer Studio voices; fallback to provided voice or default Neural2.
-    const preferredStudioVoices = [
-      "en-US-Studio-Q",
-      "en-US-Studio-O",
-      "en-US-Studio-K",
-    ];
-    let voiceName = voice || "en-US-Studio-Q";
-    if (voiceName === "auto") {
-      // If client requests auto, pick first available Studio.
-      voiceName = preferredStudioVoices[0];
-    }
+    // Use the voice selected by user (already validated by frontend dropdown)
+    const voiceName = voice || "en-US-Studio-Q";
+    console.log(`🎤 Using voice: ${voiceName}`);
 
     // Build SSML for natural pacing & emphasis
     const buildSSML = (text) => {

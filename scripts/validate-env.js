@@ -2,6 +2,10 @@
  * Environment Configuration Validator
  * Validates all required environment variables on startup
  */
+// Load .env when running standalone (npm run validate)
+try {
+  require("dotenv").config();
+} catch {}
 
 function validateEnvironment() {
   const required = ["GEMINI_API_KEY", "GOOGLE_APPLICATION_CREDENTIALS"];
