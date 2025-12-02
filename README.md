@@ -1,403 +1,142 @@
-# StudyHive - AI Study Platform
+# StudyHive
 
-**Transform lecture notes into AI-powered summaries, flashcards, and podcasts.**
+An AI-powered study tool that turns your lecture notes into summaries, flashcards, and audio podcasts.
 
-NJIT IT310 Capstone Project - Built by students, for students.
+Built by NJIT IT310 Capstone Group 9.
 
-## 🌐 Live Demo
+## What It Does
 
-[View Landing Page](https://atg25.github.io/StudyHive/)
+- Takes your class notes and creates a short summary
+- Generates flashcard questions and answers for studying
+- Creates an audio podcast you can listen to
 
-## 🚀 Quick Start
+## Requirements
 
-```bash
-npm install                  # Install dependencies
-npm run validate            # Verify environment setup
-npm start                   # Start the server
+- Node.js version 18 or higher
+- A Gemini API key (free from Google)
+- Google Cloud credentials for the podcast feature
+
+## Setup
+
+### Step 1: Install Node.js
+
+Check if you have Node.js installed:
+
+```
+node --version
 ```
 
-Open http://localhost:3000/playground.html in your browser.
+If you see v18 or higher, you are good. If not, download it from https://nodejs.org
 
----
+### Step 2: Install the project
 
-## 📁 Project Structure
+Open a terminal in this folder and run:
 
 ```
-Capstone9/
-├── server.js              # Express API server (3 endpoints)
-├── package.json           # Dependencies and scripts
-├── .env                   # Environment variables (you create this)
-│
-├── public/               # Frontend files
-│   ├── playground.html   # Interactive demo
-│   ├── index.html        # Landing page
-│   └── assets/js/        # JavaScript modules
-│
-├── scripts/              # Maintenance utilities
-│   ├── cleanup-audio.js  # Auto-cleanup (runs every 6h)
-│   └── validate-env.js   # Environment checker
-│
-├── utils/                # Helper scripts
-│   ├── list-models.js    # Show available AI models
-│   └── list-voices.js    # Show TTS voices
-│
-├── docs/                 # Documentation
-│   ├── setup/            # Setup guides
-│   ├── audits/           # Code audits
-│   └── Docs/             # Project docs
-│
-└── audio/                # Generated podcasts (auto-deleted after 24h)
-```
-
----
-
-## ⚙️ Setup (First Time)
-
-### 1. Install Node.js
-
-You need **Node.js 18+**. Check your version:
-
-```bash
-node --version   # Should be v18 or higher
-npm --version    # Should be v9 or higher
-```
-
-[Download Node.js](https://nodejs.org/) if you don't have it.
-
-### 2. Install Dependencies
-
-```bash
 npm install
 ```
 
-This installs:
+### Step 3: Get your API keys
 
-- Express (web server)
-- Google Generative AI (Gemini 2.5 Flash)
-- Google Cloud Text-to-Speech
-- CORS, dotenv, and utilities
+You need two things:
 
-### 3. Get API Keys
+1. A Gemini API key for the AI features
+   - Go to https://ai.google.dev/gemini-api/docs/api-key
+   - Click "Get API Key"
+   - Copy the key (it starts with AIza)
 
-**You need 2 API keys:**
+2. Google Cloud credentials for the podcast feature
+   - Go to https://console.cloud.google.com
+   - Create a project
+   - Turn on the Cloud Text-to-Speech API
+   - Create a service account and download the JSON key file
+   - Save the file as google-tts-credentials.json in this folder
 
-#### A) Gemini API Key (for summaries/flashcards)
+See docs/setup/PODCAST_SETUP.md for detailed steps.
 
-1. Go to https://ai.google.dev/gemini-api/docs/api-key
-2. Click "Get API Key"
-3. Copy your key (starts with `AIza...`)
+### Step 4: Create your settings file
 
-#### B) Google Cloud TTS Credentials (for podcasts)
+Create a new file called .env in this folder with this content:
 
-1. Go to https://console.cloud.google.com/
-2. Create a new project (or use existing)
-3. Enable "Cloud Text-to-Speech API"
-4. Create a service account
-5. Download JSON key file
-6. Save it as `google-tts-credentials.json` in this folder
-
-**Detailed instructions**: See `docs/setup/PODCAST_SETUP.md`
-
-### 4. Create .env File
-
-Create a file named `.env` in the project root:
-
-```env
-GEMINI_API_KEY=AIza...your_key_here
+```
+GEMINI_API_KEY=your_key_here
 GOOGLE_APPLICATION_CREDENTIALS=./google-tts-credentials.json
 PORT=3000
 NODE_ENV=development
 ```
 
-### 5. Validate Setup
+Replace your_key_here with your actual Gemini API key.
 
-```bash
+### Step 5: Check your setup
+
+Run this command to make sure everything is correct:
+
+```
 npm run validate
 ```
 
-You should see:
+You should see green checkmarks if everything is working.
+
+### Step 6: Start the server
 
 ```
-✅ Environment variables validated
-✅ API credentials found
-✅ Ready to start
-```
-
-### 6. Start the Server
-
-```bash
 npm start
 ```
 
-You should see:
+Then open your browser and go to http://localhost:3000/playground.html
+
+## How to Use
+
+1. Open http://localhost:3000/playground.html in your browser
+2. Paste your lecture notes in the text box
+3. Click one of the buttons:
+   - Generate Summary: Creates a short version of your notes
+   - Flashcards tab: Creates study questions
+   - Podcast tab: Creates an audio version you can listen to
+
+## Commands
+
+| Command | What it does |
+|---------|-------------|
+| npm start | Starts the server |
+| npm run validate | Checks if your setup is correct |
+| npm run cleanup | Deletes old audio files |
+
+## Project Files
 
 ```
-🚀 StudyHive server running on http://localhost:3000
-📝 API endpoint: http://localhost:3000/api/generate-summary
-🎙️ Podcast endpoint: http://localhost:3000/api/generate-podcast
-✅ Environment: development
+StudyHive/
+  server.js           Main server code
+  package.json        Project settings
+  .env                Your API keys (you create this)
+  public/             Website files
+    playground.html   The main page you use
+  docs/               Help documents
+  audio/              Where podcasts are saved
 ```
 
-**Visit**: http://localhost:3000/playground.html
+## Troubleshooting
 
----
+### The server will not start
 
-## 🎯 How to Use
+Run npm run validate to see what is wrong. Usually it means your .env file is missing or has the wrong keys.
 
-### Generate AI Summary
+### Port 3000 is already in use
 
-1. Open http://localhost:3000/playground.html
-2. Click "AI Summaries" tab
-3. Paste your lecture notes
-4. Click "Generate Summary"
-5. Get AI-powered summary in seconds
+Change the PORT number in your .env file to something else like 3001.
 
-### Generate Flashcards
+### Podcast is not working
 
-1. Click "Flashcards" tab
-2. Paste your notes
-3. Click "Generate Flashcards"
-4. Get Q&A pairs for studying
+Make sure you have the google-tts-credentials.json file in the right place and that the Cloud Text-to-Speech API is turned on in your Google Cloud project.
 
-### Generate Podcast
+## Team
 
-1. Click "Podcast" tab
-2. Paste your notes
-3. Select voice (Studio-Q recommended)
-4. Click "Generate Podcast"
-5. Listen to AI-narrated audio
+NJIT IT310 Capstone Group 9:
+- Andrew Gardner
+- Jovan Fernandez
+- Umar Farooq
+- Elliot Cecere
 
----
+## License
 
-## 🛠️ Available Commands
-
-| Command               | What it does               |
-| --------------------- | -------------------------- |
-| `npm start`           | Start the server           |
-| `npm run validate`    | Check if setup is correct  |
-| `npm run cleanup`     | Delete old audio files     |
-| `npm run list-voices` | Show all TTS voice options |
-| `npm run list-models` | Show available AI models   |
-
----
-
-## 🏗️ How It Works
-
-### Tech Stack
-
-- **Backend**: Node.js + Express
-- **AI**: Gemini 2.5 Flash (Google's latest model)
-- **Text-to-Speech**: Google Cloud Studio voices (highest quality)
-- **Frontend**: Vanilla JavaScript (no framework)
-
-### API Endpoints
-
-#### `POST /api/generate-summary`
-
-Generates summary from notes.
-
-```bash
-curl -X POST http://localhost:3000/api/generate-summary \
-  -H "Content-Type: application/json" \
-  -d '{"notes":"Photosynthesis is the process..."}'
-```
-
-#### `POST /api/generate-flashcards`
-
-Creates Q&A flashcards.
-
-```bash
-curl -X POST http://localhost:3000/api/generate-flashcards \
-  -H "Content-Type: application/json" \
-  -d '{"notes":"The mitochondria is..."}'
-```
-
-#### `POST /api/generate-podcast`
-
-Generates audio podcast.
-
-```bash
-curl -X POST http://localhost:3000/api/generate-podcast \
-  -H "Content-Type: application/json" \
-  -d '{"notes":"Today we discuss...", "voice":"en-US-Studio-Q"}'
-```
-
-#### `GET /health`
-
-Server health check.
-
-```bash
-curl http://localhost:3000/health
-```
-
-### Security Features
-
-- ✅ Input sanitization (removes XSS attacks)
-- ✅ CORS protection
-- ✅ Rate limiting (10 requests per 15 minutes)
-- ✅ 1MB request size limit
-- ✅ Environment validation on startup
-
-### Auto-Maintenance
-
-**Audio files are automatically cleaned:**
-
-- Runs on server startup
-- Runs every 6 hours
-- Deletes files older than 24 hours
-- Keeps storage under 100MB
-
----
-
-## 💰 Cost
-
-### Free Tier (Demo/Development)
-
-- **Gemini API**: FREE (15 requests/min, 1500 requests/day)
-- **Google Cloud TTS**: FREE for first 1 million characters/month
-
-**Total**: $0 for development and testing
-
-### Production Estimates
-
-| Usage  | Users/Month | Cost        |
-| ------ | ----------- | ----------- |
-| Small  | 100         | ~$48/month  |
-| Medium | 500         | ~$160/month |
-| Large  | 1000        | ~$480/month |
-
-See `docs/audits/TECHNICAL_DEBT_AUDIT.md` for detailed breakdown.
-
----
-
-## 🐛 Troubleshooting
-
-### "Server won't start"
-
-**Solution**: Run environment check
-
-```bash
-npm run validate
-```
-
-Common issues:
-
-- Missing `.env` file → Create it with your API keys
-- Wrong API keys → Double-check they're correct
-- Port 3000 in use → Change `PORT=3001` in `.env`
-
-### "Podcast generation fails"
-
-**Error**: `INVALID_ARGUMENT: text is longer than 5000 bytes`
-
-**Solution**: Already fixed! Server auto-limits to 4000 bytes.
-
-If you still see this, your notes might be too long. Try shorter sections.
-
-### "Audio files filling up disk"
-
-**Solution**: Already handled! Auto-cleanup runs every 6 hours.
-
-Manual cleanup:
-
-```bash
-npm run cleanup
-```
-
-### "API key not working"
-
-**For Gemini**:
-
-1. Go to https://ai.google.dev/gemini-api/docs/api-key
-2. Make sure API is enabled
-3. Copy the FULL key (starts with `AIza`)
-
-**For Google Cloud TTS**:
-
-1. Make sure "Cloud Text-to-Speech API" is enabled
-2. Service account has correct permissions
-3. JSON file is in the right location
-
----
-
-## 📚 Documentation
-
-**Setup Guides** (`docs/setup/`):
-
-- `AI_SETUP.md` - Gemini API setup
-- `PODCAST_SETUP.md` - Google Cloud TTS setup (detailed)
-- `PODCAST_QUICKSTART.md` - Quick TTS guide
-
-**Technical Audits** (`docs/audits/`):
-
-- `TECHNICAL_DEBT_AUDIT.md` - Full code analysis
-- `AUDIT_SUMMARY.md` - Executive summary
-- `FIXES_COMPLETED.md` - What we've fixed
-
-**Project Docs** (`docs/Docs/`):
-
-- `Project Charter.md` - Project overview
-- `Presence Map.md` - Team info
-
----
-
-## 🤝 Contributing
-
-### Making Changes
-
-1. Create a branch: `git checkout -b feature/your-feature`
-2. Make your changes
-3. Test thoroughly: `npm run validate && npm start`
-4. Commit: `git commit -m "Add: description"`
-5. Push: `git push origin feature/your-feature`
-6. Open a Pull Request
-
-### Code Style
-
-- Use **2-space indentation**
-- Use **sanitizeInput()** for all user inputs
-- Use **CONFIG constants** instead of hardcoded numbers
-- Add **comments** for complex logic
-- Test with: `curl -X POST http://localhost:3000/api/generate-summary -H "Content-Type: application/json" -d '{"notes":"Test"}'`
-
----
-
-## 📊 Code Quality
-
-**Current Score: 8.5/10** (Excellent)
-
-Recent improvements:
-
-- ✅ Input sanitization on all endpoints
-- ✅ Environment validation
-- ✅ Automated maintenance (audio cleanup)
-- ✅ Updated dependencies (0 vulnerabilities)
-- ✅ Centralized configuration
-- ✅ Environment-aware API URLs
-
-See `docs/audits/TECHNICAL_DEBT_AUDIT.md` for full analysis.
-
----
-
-## 👥 Team
-
-**IT310 Capstone Group 9 - NJIT**
-
-- Andrew Gardner - Frontend & UI/UX
-- Jovan Fernandez - Database & Backend
-- Umar Farooq - AI Integration & Payments
-- Elliot Cecere - Project Manager
-
-See `docs/Docs/Presence Map.md` for contact info.
-
----
-
-## 📄 License
-
-MIT License - See LICENSE file for details
-
----
-
-**Questions?** Check the docs in `docs/setup/` or run `npm run validate` to verify your setup.
-
-**Ready to start?** → `npm install && npm run validate && npm start` 🚀
+MIT License
