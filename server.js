@@ -42,7 +42,10 @@ if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
     ttsClient = new textToSpeech.TextToSpeechClient({ credentials: creds });
     console.log("✅ TTS client initialized from env JSON");
   } catch (e) {
-    console.error("❌ Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:", e.message);
+    console.error(
+      "❌ Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:",
+      e.message
+    );
     ttsClient = new textToSpeech.TextToSpeechClient();
   }
 } else {
@@ -470,7 +473,9 @@ module.exports = app;
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`🚀 StudyHive server running on http://localhost:${PORT}`);
-    console.log(`📝 API endpoint: http://localhost:${PORT}/api/generate-summary`);
+    console.log(
+      `📝 API endpoint: http://localhost:${PORT}/api/generate-summary`
+    );
     console.log(
       `🎙️ Podcast endpoint: http://localhost:${PORT}/api/generate-podcast`
     );
