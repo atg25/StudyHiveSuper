@@ -16,7 +16,7 @@ if (!process.env.GEMINI_API_KEY) {
 }
 
 if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-  console.warn("⚠️  GOOGLE_APPLICATION_CREDENTIALS not set");
+  console.warn("GOOGLE_APPLICATION_CREDENTIALS not set");
   console.warn("TTS features may not work without Google Cloud credentials");
 }
 
@@ -31,6 +31,8 @@ const CONFIG = {
   SSML_BYTE_LIMIT: 5000,
   MAX_INPUT_LENGTH: 10000,
   AUDIO_CLEANUP_AGE_MS: 24 * 60 * 60 * 1000, // 24 hours
+  GEMINI_MODEL: "gemini-2.5-flash", // AI model to use
+  DEFAULT_VOICE: "en-US-Studio-O", // Default TTS voice
 };
 
 // Initialize Google Cloud Text-to-Speech client
@@ -40,10 +42,10 @@ if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
   try {
     const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
     ttsClient = new textToSpeech.TextToSpeechClient({ credentials: creds });
-    console.log("✅ TTS client initialized from env JSON");
+    console.log("TTS client initialized from env JSON");
   } catch (e) {
     console.error(
-      "❌ Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:",
+      "Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:",
       e.message
     );
     ttsClient = new textToSpeech.TextToSpeechClient();
@@ -88,6 +90,10 @@ app.use("/audio", express.static(audioDir)); // Serve audio files
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// Debug logging helper (only logs in development)
+const DEBUG = process.env.NODE_ENV !== "production";
+const debug = (...args) => DEBUG && console.log(...args);
 
 // Rate limiting storage (in-memory for demo, use Redis for production)
 const rateLimitStore = new Map();
@@ -134,9 +140,9 @@ app.post("/api/generate-summary", rateLimit, async (req, res) => {
       });
     }
 
-    // Initialize Gemini model (using latest available model)
+    // Initialize Gemini model
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: CONFIG.GEMINI_MODEL,
     });
 
     const prompt = `You are an AI tutor that transforms student lecture notes into comprehensive, in-depth study guides. Your summaries should be detailed, educational, and help students learn the material thoroughly.
@@ -191,7 +197,7 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
 
     // Step 1: Generate conversational podcast script from summary
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: CONFIG.GEMINI_MODEL,
     });
 
     const scriptPrompt = `You are an engaging tutor creating a high-quality spoken podcast script from the study summary.
@@ -210,12 +216,10 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
 
   Return ONLY the host's spoken words.`;
 
-    console.time("gemini_script");
     const scriptResult = await model.generateContent(scriptPrompt);
     const scriptResponse = await scriptResult.response;
     let podcastScript = scriptResponse.text();
-    console.timeEnd("gemini_script");
-    console.log("Generated script length chars:", podcastScript.length);
+    debug("Generated script length:", podcastScript.length, "chars");
 
     // Clean up the script - remove all non-dialogue elements
     podcastScript = podcastScript
@@ -245,11 +249,11 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
     // Enforce byte limit for TTS (Google Cloud limit is 5000 bytes)
     // SSML adds ~15-20% overhead, so limit plain text to ~4000 bytes to be safe
     if (Buffer.byteLength(cleanText, "utf8") > CONFIG.MAX_TTS_BYTES) {
-      console.log(
+      debug(
         `Text too long (${Buffer.byteLength(
           cleanText,
           "utf8"
-        )} bytes), truncating to ${CONFIG.MAX_TTS_BYTES} bytes`
+        )} bytes), truncating`
       );
       // Truncate to max bytes, then trim to last complete sentence
       let truncated = Buffer.from(cleanText, "utf8")
@@ -264,12 +268,11 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
         truncated = truncated.substring(0, lastSentenceEnd + 1);
       }
       cleanText = truncated.trim();
-      console.log(`Truncated to ${Buffer.byteLength(cleanText, "utf8")} bytes`);
+      debug(`Truncated to ${Buffer.byteLength(cleanText, "utf8")} bytes`);
     }
 
     // Use the voice selected by user (already validated by frontend dropdown)
-    const voiceName = voice || "en-US-Studio-Q";
-    console.log(`🎤 Using voice: ${voiceName}`);
+    const voiceName = voice || CONFIG.DEFAULT_VOICE;
 
     // Build SSML for natural pacing & emphasis
     const buildSSML = (text) => {
@@ -295,14 +298,12 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
 
     const ssmlInput = buildSSML(cleanText);
     const ssmlBytes = Buffer.byteLength(ssmlInput, "utf8");
-    console.log("SSML length chars:", ssmlInput.length, "bytes:", ssmlBytes);
+    debug("SSML bytes:", ssmlBytes);
 
     let audioBuffer;
     const shouldSkipSSML = ssmlBytes > CONFIG.SSML_BYTE_LIMIT;
     if (shouldSkipSSML) {
-      console.warn(
-        `SSML exceeds ${CONFIG.SSML_BYTE_LIMIT} byte limit (${ssmlBytes}). Using plain text synthesis.`
-      );
+      debug("SSML exceeds limit, using plain text synthesis");
     }
     try {
       if (!shouldSkipSSML) {
@@ -312,7 +313,7 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
           audioConfig: { audioEncoding: "MP3", speakingRate: 1.0 },
         });
         audioBuffer = resp.audioContent;
-        console.log("SSML synthesis OK, bytes:", audioBuffer.length);
+        debug("SSML synthesis OK, bytes:", audioBuffer.length);
       }
       if (shouldSkipSSML || !audioBuffer) {
         const [plainResp] = await ttsClient.synthesizeSpeech({
@@ -321,27 +322,21 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
           audioConfig: { audioEncoding: "MP3", speakingRate: 1.0 },
         });
         audioBuffer = plainResp.audioContent;
-        console.log("Plain text synthesis OK, bytes:", audioBuffer.length);
+        debug("Plain text synthesis OK, bytes:", audioBuffer.length);
       }
     } catch (err) {
       const errAggregate = [err.message, err.details, JSON.stringify(err)].join(
         " "
       );
       if (/INVALID_ARGUMENT|NOT_FOUND/i.test(errAggregate)) {
-        console.warn(
-          "Initial synthesis failed, attempting plain text fallback:",
-          errAggregate.slice(0, 240)
-        );
+        debug("Initial synthesis failed, attempting fallback");
         const [plainResp] = await ttsClient.synthesizeSpeech({
           input: { text: cleanText },
           voice: { languageCode: voiceName.substring(0, 5), name: voiceName },
           audioConfig: { audioEncoding: "MP3", speakingRate: 1.0 },
         });
         audioBuffer = plainResp.audioContent;
-        console.log(
-          "Plain text fallback synthesis OK, bytes:",
-          audioBuffer.length
-        );
+        debug("Fallback synthesis OK, bytes:", audioBuffer.length);
       } else {
         throw err;
       }
@@ -388,7 +383,7 @@ app.post("/api/generate-flashcards", rateLimit, async (req, res) => {
     }
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: CONFIG.GEMINI_MODEL,
     });
 
     const prompt = `Generate exactly ${count} flashcards from these lecture notes:
@@ -464,14 +459,14 @@ module.exports = app;
 // Only start server if running directly (not imported by Vercel)
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`🚀 StudyHive server running on http://localhost:${PORT}`);
+    console.log(`StudyHive server running on http://localhost:${PORT}`);
     console.log(
-      `📝 API endpoint: http://localhost:${PORT}/api/generate-summary`
+      `API endpoint: http://localhost:${PORT}/api/generate-summary`
     );
     console.log(
-      `🎙️ Podcast endpoint: http://localhost:${PORT}/api/generate-podcast`
+      `Podcast endpoint: http://localhost:${PORT}/api/generate-podcast`
     );
-    console.log(`✅ Environment: ${process.env.NODE_ENV || "development"}`);
+    console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
 
     // Run initial cleanup
     console.log("\n🧹 Running initial audio cleanup...");

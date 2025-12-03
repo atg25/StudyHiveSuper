@@ -8,9 +8,9 @@
 
 Before you start, make sure you have:
 
-- ✅ **Node.js 18+** installed ([Download here](https://nodejs.org/))
-- ✅ A **Google account** (for API keys)
-- ✅ A **terminal/command prompt**
+- **Node.js 18+** installed ([Download here](https://nodejs.org/))
+- A **Google account** (for API keys)
+- A **terminal/command prompt**
 
 ---
 
@@ -84,10 +84,10 @@ npm run validate
 **Success looks like**:
 
 ```
-✅ Environment variables validated
-✅ GEMINI_API_KEY found
-✅ GOOGLE_APPLICATION_CREDENTIALS found
-✅ Ready to start
+Environment variables validated
+GEMINI_API_KEY found
+GOOGLE_APPLICATION_CREDENTIALS found
+Ready to start
 ```
 
 **If you see errors**, check that:
@@ -107,11 +107,11 @@ npm start
 You should see:
 
 ```
-🚀 StudyHive server running on http://localhost:3000
-📝 API endpoint: http://localhost:3000/api/generate-summary
-🎙️ Podcast endpoint: http://localhost:3000/api/generate-podcast
-✅ Environment: development
-🧹 Running initial audio cleanup...
+StudyHive server running on http://localhost:3000
+API endpoint: http://localhost:3000/api/generate-summary
+Podcast endpoint: http://localhost:3000/api/generate-podcast
+Environment: development
+Running initial audio cleanup...
 ```
 
 **Keep this terminal window open!** The server needs to stay running.
@@ -273,7 +273,7 @@ npm run list-voices
 
 ---
 
-**You're all set!** 🎉
+**You're all set!**
 
 Visit http://localhost:3000/playground.html and start generating AI content.
 

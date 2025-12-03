@@ -69,17 +69,37 @@ subjectSelect.addEventListener("change", (e) => {
 // Initialize with first subject
 notesTextarea.value = sampleData[currentSubject].notes;
 
+// Input validation constants (match server)
+const MAX_INPUT_LENGTH = 10000;
+const MIN_INPUT_LENGTH = 10;
+
 // Generate Summary
 generateBtn.addEventListener("click", async () => {
-  if (!notesTextarea.value.trim()) {
+  const notes = notesTextarea.value.trim();
+
+  if (!notes) {
     showToast("Please enter some notes first!");
+    return;
+  }
+
+  if (notes.length < MIN_INPUT_LENGTH) {
+    showToast(
+      `Notes too short. Please enter at least ${MIN_INPUT_LENGTH} characters.`
+    );
+    return;
+  }
+
+  if (notes.length > MAX_INPUT_LENGTH) {
+    showToast(
+      `Notes too long. Maximum ${MAX_INPUT_LENGTH} characters allowed.`
+    );
     return;
   }
 
   // Check if backend is available
   if (API_CONFIG.IS_DEMO_MODE) {
     showToast(
-      "⚠️ Demo mode: Backend server required for AI features. Run 'npm start' locally or deploy the backend."
+      "Demo mode: Backend server required for AI features. Run 'npm start' locally or deploy the backend."
     );
     return;
   }
@@ -122,10 +142,10 @@ generateBtn.addEventListener("click", async () => {
     // Store summary for podcast
     currentSummary = data.summary;
 
-    // Reset votes
+    // Reset votes (start fresh for each new summary)
     hasVoted = false;
-    helpfulVotes = Math.floor(Math.random() * 50) + 100; // Random 100-150
-    notHelpfulVotes = Math.floor(Math.random() * 20) + 5; // Random 5-25
+    helpfulVotes = 0;
+    notHelpfulVotes = 0;
     updateVoteCounts();
     thumbsUp.classList.remove("voted");
     thumbsDown.classList.remove("voted");
@@ -168,7 +188,7 @@ function updateVoteCounts() {
 generatePodcastBtn.addEventListener("click", async () => {
   if (!currentSummary || currentSummary.trim() === "") {
     showToast(
-      "⚠️ Please generate an AI summary first! Go to the AI SUMMARIES tab and click 'Generate AI Summary'."
+      "Please generate an AI summary first! Go to the AI SUMMARIES tab and click 'Generate AI Summary'."
     );
     return;
   }
@@ -238,7 +258,6 @@ if (exportBtn) {
 // Generate Flashcards Button
 if (makeCardsBtn) {
   makeCardsBtn.addEventListener("click", async () => {
-    console.log("Generate flashcards button clicked");
     const notes = document.getElementById("notes").value;
     const flashcardLoading = document.getElementById("flashcardLoading");
     const flashcardOutput = document.getElementById("flashcardOutput");
@@ -248,13 +267,22 @@ if (makeCardsBtn) {
       return;
     }
 
+    if (notes.length < MIN_INPUT_LENGTH) {
+      showToast(
+        `Notes too short. Please enter at least ${MIN_INPUT_LENGTH} characters.`
+      );
+      return;
+    }
+
     // Switch to flashcards tab
     tabBtns.forEach((b) => b.classList.remove("active"));
     tabContents.forEach((c) => c.classList.remove("active"));
     tabBtns[1].classList.add("active");
     document.getElementById("flashcards").classList.add("active");
 
-    // Show loading state
+    // Show loading state and disable button
+    makeCardsBtn.disabled = true;
+    makeCardsBtn.textContent = "Generating...";
     if (flashcardLoading) flashcardLoading.style.display = "flex";
     if (flashcardOutput) flashcardOutput.style.display = "none";
 
@@ -285,14 +313,13 @@ if (makeCardsBtn) {
       if (flashcardOutput) flashcardOutput.style.display = "block";
       showToast(`Generated ${currentFlashcards.length} flashcards!`);
     } catch (error) {
-      console.error("Flashcard generation error:", error);
       showToast("Error generating flashcards. Please try again.");
     } finally {
+      makeCardsBtn.disabled = false;
+      makeCardsBtn.textContent = "Generate Flashcards from Notes";
       if (flashcardLoading) flashcardLoading.style.display = "none";
     }
   });
-} else {
-  console.error("makeCardsBtn not found in DOM");
 }
 
 // Flashcard Logic

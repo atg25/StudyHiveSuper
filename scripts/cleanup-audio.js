@@ -31,7 +31,7 @@ async function cleanupOldFiles() {
     });
 
     console.log(
-      `📊 Current storage: ${(totalSize / 1024 / 1024).toFixed(2)}MB`
+      `Current storage: ${(totalSize / 1024 / 1024).toFixed(2)}MB`
     );
 
     // Delete old files
@@ -67,14 +67,14 @@ async function cleanupOldFiles() {
     }
 
     if (deletedCount > 0) {
-      console.log(`✅ Cleanup complete: ${deletedCount} files deleted`);
+      console.log(`Cleanup complete: ${deletedCount} files deleted`);
     } else {
-      console.log(`✅ No files to clean up`);
+      console.log(`No files to clean up`);
     }
 
     return { deletedCount, totalSizeMB: totalSize / 1024 / 1024 };
   } catch (error) {
-    console.error("❌ Cleanup error:", error.message);
+    console.error("Cleanup error:", error.message);
     throw error;
   }
 }
@@ -83,7 +83,7 @@ async function cleanupOldFiles() {
 if (require.main === module) {
   cleanupOldFiles()
     .then(({ deletedCount, totalSizeMB }) => {
-      console.log(`\n📈 Final stats:`);
+      console.log(`\nFinal stats:`);
       console.log(`   Deleted: ${deletedCount} files`);
       console.log(`   Storage: ${totalSizeMB.toFixed(2)}MB`);
     })

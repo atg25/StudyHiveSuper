@@ -41,7 +41,7 @@ function validateEnvironment() {
 
   // Report results
   if (missing.length > 0) {
-    console.error("\n❌ MISSING REQUIRED ENVIRONMENT VARIABLES:");
+    console.error("\n MISSING REQUIRED ENVIRONMENT VARIABLES:");
     missing.forEach((key) => console.error(`   - ${key}`));
     console.error("\nCreate a .env file with these variables.\n");
     throw new Error(
@@ -50,12 +50,12 @@ function validateEnvironment() {
   }
 
   if (warnings.length > 0) {
-    console.warn("\n⚠️  ENVIRONMENT WARNINGS:");
+    console.warn("\n  ENVIRONMENT WARNINGS:");
     warnings.forEach((msg) => console.warn(`   - ${msg}`));
     console.warn("");
   }
 
-  console.log("✅ Environment validation passed\n");
+  console.log(" Environment validation passed\n");
   return true;
 }
 

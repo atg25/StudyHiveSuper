@@ -4,11 +4,7 @@
 
 Transform your messy class notes into AI-powered, peer-verified study resources. Built by students, for students.
 
-## 🌐 Live Demo
-
-[View Landing Page](https://atg25.github.io/StudyHive/)
-
-## 🎯 Project Overview
+## Project Overview
 
 StudyHive is an IT310 Capstone Project at NJIT that combines:
 
@@ -17,7 +13,7 @@ StudyHive is an IT310 Capstone Project at NJIT that combines:
 - Mobile-first brutalist design
 - Tiered subscription model (Free/Plus/Premium)
 
-## 🚀 Features
+## Features
 
 - **AI Summaries**: Upload notes, get instant summaries
 - **Peer Ratings**: Community-verified accuracy
@@ -25,14 +21,14 @@ StudyHive is an IT310 Capstone Project at NJIT that combines:
 - **Share Everything**: Collaborate with study groups
 - **Mobile First**: Study where you actually are
 
-## 👥 Team
+## Team
 
 - **Andrew Gardner** - Frontend & UI/UX
 - **Jovan Fernandez** - Database & Backend
 - **Umar Farooq** - AI Integration & Payments
 - **Elliot Cecere** - Project Manager
 
-## 📚 Documentation
+## Documentation
 
 See `/Docs` folder for:
 
@@ -41,7 +37,7 @@ See `/Docs` folder for:
 - AI Suggestions
 - Design Research
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - Frontend: HTML, CSS, JavaScript
 - Backend: PHP
@@ -49,12 +45,12 @@ See `/Docs` folder for:
 - AI: Claude API / GPT-3.5
 - Design: Brutalist + Hexagon/Hive Theme
 
-## 📅 Timeline
+## Timeline
 
 **Project Duration**: Sept 19 - Dec 3, 2025  
 **Presentation**: Dec 10, 2025
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 Bold, unapologetic, brutalist design inspired by Dbrand. High contrast, sharp edges, hexagonal elements representing the "hive" concept.
 

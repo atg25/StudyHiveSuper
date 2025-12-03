@@ -22,17 +22,17 @@ Built by NJIT IT310 Capstone Group 9.
 
 Check if you have Node.js installed:
 
-```
+```bash
 node --version
 ```
 
-If you see v18 or higher, you are good. If not, download it from https://nodejs.org
+If you see v18 or higher, you are good. If not, download it from [nodejs.org](https://nodejs.org).
 
 ### Step 2: Install the project
 
 Open a terminal in this folder and run:
 
-```
+```bash
 npm install
 ```
 
@@ -42,12 +42,12 @@ You need two things:
 
 1. A Gemini API key for the AI features
 
-   - Go to https://ai.google.dev/gemini-api/docs/api-key
+   - Go to [Google AI Studio](https://ai.google.dev/gemini-api/docs/api-key)
    - Click "Get API Key"
    - Copy the key (it starts with AIza)
 
 2. Google Cloud credentials for the podcast feature
-   - Go to https://console.cloud.google.com
+   - Go to [Google Cloud Console](https://console.cloud.google.com)
    - Create a project
    - Turn on the Cloud Text-to-Speech API
    - Create a service account and download the JSON key file
@@ -59,7 +59,7 @@ See docs/setup/PODCAST_SETUP.md for detailed steps.
 
 Create a new file called .env in this folder with this content:
 
-```
+```ini
 GEMINI_API_KEY=your_key_here
 GOOGLE_APPLICATION_CREDENTIALS=./google-tts-credentials.json
 PORT=3000
@@ -72,7 +72,7 @@ Replace your_key_here with your actual Gemini API key.
 
 Run this command to make sure everything is correct:
 
-```
+```bash
 npm run validate
 ```
 
@@ -80,15 +80,15 @@ You should see green checkmarks if everything is working.
 
 ### Step 6: Start the server
 
-```
+```bash
 npm start
 ```
 
-Then open your browser and go to http://localhost:3000/playground.html
+Then open your browser and go to [localhost:3000/playground.html](http://localhost:3000/playground.html).
 
 ## How to Use
 
-1. Open http://localhost:3000/playground.html in your browser
+1. Open [localhost:3000/playground.html](http://localhost:3000/playground.html) in your browser
 2. Paste your lecture notes in the text box
 3. Click one of the buttons:
    - Generate Summary: Creates a short version of your notes
@@ -105,7 +105,7 @@ Then open your browser and go to http://localhost:3000/playground.html
 
 ## Project Files
 
-```
+```text
 StudyHive/
   server.js           Main server code
   package.json        Project settings

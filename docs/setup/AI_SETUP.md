@@ -54,14 +54,6 @@ http://localhost:3000/playground.html
 4. Wait 2-5 seconds for real AI to process
 5. See the AI-generated summary appear!
 
-## Features
-
-✅ **Real AI Integration** - Uses Google Gemini 1.5 Flash
-✅ **Rate Limiting** - 10 requests per 15 minutes per IP
-✅ **Error Handling** - Graceful fallbacks if API fails
-✅ **Markdown Support** - Bold headers and formatting
-✅ **Fast Response** - Typically 2-3 seconds
-✅ **Free Tier** - Gemini has generous free quota
 
 ## API Endpoints
 

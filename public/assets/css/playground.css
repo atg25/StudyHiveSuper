@@ -345,35 +345,6 @@ textarea {
   margin: 0;
 }
 
-.tab-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 3px solid var(--white);
-}
-
-.tab-header h3 {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.5rem;
-  text-transform: uppercase;
-  margin: 0 0 0.5rem 0;
-}
-
-.tab-header p {
-  margin: 0;
-  opacity: 0.9;
-  font-size: 0.95rem;
-}
-
-.tab-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  flex-shrink: 0;
-  filter: brightness(0) invert(1);
-}
-
 .summary-text {
   line-height: 1.8;
   margin-bottom: 2rem;
@@ -577,8 +548,6 @@ textarea {
   text-align: center;
 }
 
-
-
 .podcast-controls {
   padding: 2rem;
   border: 3px solid var(--white);
@@ -731,6 +700,81 @@ audio {
   to {
     transform: translateX(0);
   }
+}
+
+/* UTILITY CLASSES */
+.section-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-block;
+}
+
+.flashcard-output {
+  display: none;
+}
+
+.flashcard-output.active {
+  display: block;
+}
+
+.flashcard-wrapper-inner {
+  perspective: 1000px;
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+.flashcard-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+}
+
+.card-counter {
+  color: var(--honey);
+  font-weight: bold;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.card-hint {
+  text-align: center;
+  margin-top: 1rem;
+  color: #888;
+}
+
+.podcast-generate-btn {
+  margin-top: 1rem;
+}
+
+.podcast-player {
+  display: none;
+  padding: 2rem;
+  border: 3px solid var(--honey);
+  background: var(--gray);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.podcast-player.active {
+  display: block;
+}
+
+.podcast-player h4 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem;
+  color: var(--honey);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.audio-player {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.download-btn {
+  margin-top: 1rem;
+  display: inline-block;
 }
 
 /* MOBILE RESPONSIVE */

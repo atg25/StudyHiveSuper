@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Try StudyHive's AI-powered study tools. Generate summaries, flashcards, and podcasts from your notes. No signup required."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬢</text></svg>"
+    />
     <title>Playground - STUDYHIVE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,50 +50,49 @@
     <div class="tab-content active" id="summary">
       <div class="summary-container">
         <div class="summary-header-section">
-          <span style="font-size: 2.5rem">⬢</span>
+          <img src="assets/icons/notes.svg" alt="" class="section-icon" />
           <h3>AI-Generated Summary</h3>
           <p>Convert your notes into a concise, structured summary</p>
         </div>
 
-      <div class="demo-controls">
-        <label for="subject">Select Subject:</label>
-        <select id="subject">
-          <option value="cs101">CS 101 - Algorithms</option>
-          <option value="history">History 202 - Civil War</option>
-          <option value="biology">Biology 301 - Cell Biology</option>
-          <option value="math">Math 250 - Calculus II</option>
-          <option value="english">English 201 - Shakespeare</option>
-        </select>
+        <div class="demo-controls">
+          <label for="subject">Select Subject:</label>
+          <select id="subject">
+            <option value="cs101">CS 101 - Algorithms</option>
+            <option value="history">History 202 - Civil War</option>
+            <option value="biology">Biology 301 - Cell Biology</option>
+            <option value="math">Math 250 - Calculus II</option>
+            <option value="english">English 201 - Shakespeare</option>
+          </select>
 
-        <label for="notes">Your Notes:</label>
-        <textarea
-          id="notes"
-          placeholder="Paste your class notes here..."
-        ></textarea>
+          <label for="notes">Your Notes:</label>
+          <textarea
+            id="notes"
+            placeholder="Paste your class notes here..."
+          ></textarea>
 
-        <button class="btn btn-primary" id="generateBtn">
-          Generate Summary
-        </button>
-      </div>
-
-      <div class="loading" id="loading">
-        <div class="hexagon-spinner">⬢</div>
-        <div>Processing...</div>
-      </div>
-
-      <div class="summary-output" id="summaryOutput">
-
-        <div class="summary-text" id="summaryText"></div>
-
-        <div class="rating-section">
-          <button class="rating-btn" id="thumbsUp">
-            👍 <span id="helpfulCount">0</span> Helpful
-          </button>
-          <button class="rating-btn" id="thumbsDown">
-            👎 <span id="notHelpfulCount">0</span> Not Helpful
+          <button class="btn btn-primary" id="generateBtn">
+            Generate Summary
           </button>
         </div>
-      </div>
+
+        <div class="loading" id="loading">
+          <div class="hexagon-spinner">⬢</div>
+          <div>Processing...</div>
+        </div>
+
+        <div class="summary-output" id="summaryOutput">
+          <div class="summary-text" id="summaryText"></div>
+
+          <div class="rating-section">
+            <button class="rating-btn" id="thumbsUp">
+              👍 <span id="helpfulCount">0</span> Helpful
+            </button>
+            <button class="rating-btn" id="thumbsDown">
+              👎 <span id="notHelpfulCount">0</span> Not Helpful
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -93,7 +100,7 @@
     <div class="tab-content" id="flashcards">
       <div class="flashcard-container">
         <div class="flashcard-header-section">
-          <img src="assets/icons/flashCard.svg" alt="" style="width: 2.5rem; height: 2.5rem; display: inline-block;" />
+          <img src="assets/icons/flashCard.svg" alt="" class="section-icon" />
           <h3>AI-Generated Flashcards</h3>
           <p>Convert your notes into interactive study flashcards</p>
         </div>
@@ -104,17 +111,14 @@
           </button>
         </div>
 
-        <div id="flashcardLoading" class="loading" style="display: none">
+        <div id="flashcardLoading" class="loading">
           <div class="hexagon-spinner">⬢</div>
           <div>Generating flashcards...</div>
         </div>
 
-        <div id="flashcardOutput" style="display: none">
-          <div
-            class="flashcard-wrapper"
-            style="perspective: 1000px; margin: 2rem auto; max-width: 500px"
-          >
-            <div class="flashcard" id="flashcard" style="cursor: pointer">
+        <div id="flashcardOutput" class="flashcard-output">
+          <div class="flashcard-wrapper flashcard-wrapper-inner">
+            <div class="flashcard" id="flashcard">
               <div class="flashcard-face flashcard-front">
                 <div class="card-label">QUESTION</div>
                 <div id="cardQuestion">
@@ -130,27 +134,13 @@
             </div>
           </div>
 
-          <div
-            class="flashcard-nav"
-            style="
-              display: flex;
-              justify-content: center;
-              gap: 1rem;
-              align-items: center;
-            "
-          >
+          <div class="flashcard-nav">
             <button class="card-nav-btn" id="prevCard">← Previous</button>
-            <span
-              id="cardCounter"
-              style="color: var(--honey); font-weight: bold"
-              >1 / 5</span
-            >
+            <span id="cardCounter" class="card-counter">1 / 5</span>
             <button class="card-nav-btn" id="nextCard">Next →</button>
           </div>
 
-          <p style="text-align: center; margin-top: 1rem; color: #888">
-            Click the card to flip it!
-          </p>
+          <p class="card-hint">Click the card to flip it!</p>
         </div>
 
         <div class="flashcard-info">
@@ -169,7 +159,7 @@
     <div class="tab-content" id="podcast">
       <div class="podcast-container">
         <div class="podcast-header-section">
-          <img src="assets/icons/microphone.svg" alt="" style="width: 2.5rem; height: 2.5rem; display: inline-block;" />
+          <img src="assets/icons/microphone.svg" alt="" class="section-icon" />
           <h3>AI-Generated Study Podcast</h3>
           <p>Convert your AI summary into a natural-sounding audio podcast</p>
         </div>
@@ -207,21 +197,16 @@
           </select>
 
           <button
-            class="action-btn"
+            class="action-btn podcast-generate-btn"
             id="generatePodcastBtn"
-            style="margin-top: 1rem"
           >
             Generate Podcast
           </button>
         </div>
 
-        <div class="podcast-player" id="podcastPlayer" style="display: none">
+        <div class="podcast-player" id="podcastPlayer">
           <h4>Your Podcast is Ready!</h4>
-          <audio
-            controls
-            id="audioPlayer"
-            style="width: 100%; margin-top: 1rem"
-          >
+          <audio controls id="audioPlayer" class="audio-player">
             <source id="audioSource" type="audio/mpeg" />
             Your browser does not support audio playback.
           </audio>
@@ -229,8 +214,7 @@
             href="#"
             id="downloadPodcast"
             download
-            class="action-btn"
-            style="margin-top: 1rem; display: inline-block"
+            class="action-btn download-btn"
           >
             Download MP3
           </a>
