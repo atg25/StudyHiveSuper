@@ -61,7 +61,7 @@
       }
 
       .logo::before {
-        content: "⬢";
+        content: "O";
         color: var(--honey);
         margin-right: 0.5rem;
       }
@@ -535,7 +535,7 @@
       }
 
       .feature-list li::before {
-        content: "⬢ ";
+        content: "* ";
         color: var(--honey);
         font-size: 1.2rem;
         margin-right: 0.5rem;
@@ -743,13 +743,13 @@
       </div>
 
       <div class="loading" id="loading">
-        <div class="hexagon-spinner">⬢</div>
+        <div class="hexagon-spinner">O</div>
         <div>Processing...</div>
       </div>
 
       <div class="summary-output" id="summaryOutput">
         <div class="summary-header">
-          <span style="font-size: 2rem; color: var(--honey)">⬢</span>
+          <span style="font-size: 2rem; color: var(--honey)">O</span>
           <h3>AI Summary</h3>
         </div>
 
@@ -757,10 +757,10 @@
 
         <div class="rating-section">
           <button class="rating-btn" id="thumbsUp">
-            👍 <span id="helpfulCount">0</span> Helpful
+            [+] <span id="helpfulCount">0</span> Helpful
           </button>
           <button class="rating-btn" id="thumbsDown">
-            👎 <span id="notHelpfulCount">0</span> Not Helpful
+            [-] <span id="notHelpfulCount">0</span> Not Helpful
           </button>
         </div>
       </div>
@@ -773,7 +773,7 @@
           class="flashcard-header"
           style="text-align: center; margin-bottom: 2rem"
         >
-          <h3>📚 AI-Generated Flashcards</h3>
+          <h3>[CARDS] AI-Generated Flashcards</h3>
           <p>Convert your notes into interactive study flashcards</p>
         </div>
 
@@ -784,7 +784,7 @@
         </div>
 
         <div id="flashcardLoading" class="loading" style="display: none">
-          <div class="hexagon-spinner">⬢</div>
+          <div class="hexagon-spinner">O</div>
           <div>Generating flashcards...</div>
         </div>
 
@@ -799,12 +799,12 @@
                 <div id="cardQuestion">
                   Click "Generate Flashcards" to start
                 </div>
-                <div class="card-corner">⬢</div>
+                <div class="card-corner">*</div>
               </div>
               <div class="flashcard-face flashcard-back">
                 <div class="card-label">ANSWER</div>
                 <div id="cardAnswer"></div>
-                <div class="card-corner">⬢</div>
+                <div class="card-corner">*</div>
               </div>
             </div>
           </div>
@@ -841,19 +841,19 @@
             background: var(--gray);
           "
         >
-          <h4 style="margin-bottom: 1rem">💡 How it works:</h4>
+          <h4 style="margin-bottom: 1rem">[INFO] How it works:</h4>
           <ul style="list-style: none; padding: 0">
             <li style="margin-bottom: 0.5rem">
-              ✓ Enter your notes in the AI Summaries tab
+              * Enter your notes in the AI Summaries tab
             </li>
             <li style="margin-bottom: 0.5rem">
-              ✓ Click "Generate Flashcards" to create Q&A pairs
+              * Click "Generate Flashcards" to create Q&A pairs
             </li>
             <li style="margin-bottom: 0.5rem">
-              ✓ Click cards to flip between question and answer
+              * Click cards to flip between question and answer
             </li>
             <li style="margin-bottom: 0.5rem">
-              ✓ Use arrows to navigate through your deck
+              * Use arrows to navigate through your deck
             </li>
           </ul>
         </div>
@@ -864,7 +864,7 @@
     <div class="tab-content" id="podcast">
       <div class="podcast-container">
         <div class="podcast-header">
-          <h3>🎙️ AI-Generated Study Podcast</h3>
+          <h3>[AUDIO] AI-Generated Study Podcast</h3>
           <p>Convert your AI summary into a natural-sounding audio podcast</p>
         </div>
 
@@ -873,7 +873,7 @@
             >Select Voice (Highest Quality Studio):</label
           >
           <select id="voiceSelect" class="voice-select">
-            <optgroup label="✨ Studio Quality (Best)">
+            <optgroup label="[BEST] Studio Quality">
               <option value="en-US-Studio-O" selected>
                 Studio O - Conversational, Warm (Female)
               </option>
@@ -881,7 +881,7 @@
                 Studio Q - Clear, Professional (Male)
               </option>
             </optgroup>
-            <optgroup label="🎙️ Journey Quality">
+            <optgroup label="[GOOD] Journey Quality">
               <option value="en-US-Journey-F">
                 Journey F - Natural, Expressive (Female)
               </option>
@@ -939,19 +939,19 @@
             background: var(--gray);
           "
         >
-          <h4 style="margin-bottom: 1rem">💡 How it works:</h4>
+          <h4 style="margin-bottom: 1rem">[INFO] How it works:</h4>
           <ul style="list-style: none; padding: 0">
             <li style="margin-bottom: 0.5rem">
-              ✓ First, generate an AI summary from your notes
+              * First, generate an AI summary from your notes
             </li>
             <li style="margin-bottom: 0.5rem">
-              ✓ Then click "Generate Podcast" to convert it to audio
+              * Then click "Generate Podcast" to convert it to audio
             </li>
             <li style="margin-bottom: 0.5rem">
-              ✓ Listen while commuting, exercising, or studying
+              * Listen while commuting, exercising, or studying
             </li>
             <li style="margin-bottom: 0.5rem">
-              ✓ Download the MP3 for offline listening
+              * Download the MP3 for offline listening
             </li>
           </ul>
         </div>
