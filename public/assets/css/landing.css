@@ -1,0 +1,387 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --honey: #ffb800;
+  --gray: #1a1a1a;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* BRUTALIST HEADER */
+header {
+  border-bottom: 4px solid var(--white);
+  padding: 2rem;
+  position: sticky;
+  top: 0;
+  background: var(--black);
+  z-index: 1000;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -2px;
+  position: relative;
+}
+
+.logo::before {
+  content: "⬢";
+  color: var(--honey);
+  margin-right: 0.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  border: 3px solid transparent;
+  padding: 0.5rem 1rem;
+  transition: none;
+}
+
+.nav-links a:hover {
+  border: 3px solid var(--honey);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--honey);
+}
+
+/* HERO SECTION */
+.hero {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+  position: relative;
+}
+
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.9;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  position: relative;
+}
+
+h1 .highlight {
+  color: var(--honey);
+  text-shadow: 6px 6px 0 var(--black), 7px 7px 0 var(--white);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  max-width: 800px;
+  margin-bottom: 3rem;
+  border-left: 6px solid var(--honey);
+  padding-left: 2rem;
+  font-weight: 400;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.stat {
+  border: 3px solid var(--white);
+  padding: 1.5rem;
+  background: var(--gray);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  color: var(--honey);
+  font-weight: 700;
+}
+
+.stat-label {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+
+/* BRUTALIST BUTTONS */
+.cta-group {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 1.5rem 3rem;
+  border: 4px solid var(--black);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: none;
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background: var(--honey);
+  color: var(--black);
+  box-shadow: 8px 8px 0 var(--white);
+}
+
+.btn-primary:hover {
+  transform: translate(4px, 4px);
+  box-shadow: 4px 4px 0 var(--white);
+}
+
+.btn-secondary {
+  background: var(--black);
+  color: var(--white);
+  border: 4px solid var(--white);
+}
+
+.btn-secondary:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+/* WHY NOT CHATGPT SECTION */
+.why-section {
+  background: var(--white);
+  color: var(--black);
+  padding: 6rem 2rem;
+  border-top: 8px solid var(--honey);
+  border-bottom: 8px solid var(--honey);
+  margin: 4rem 0;
+}
+
+.why-section .container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.reason-card {
+  border: 4px solid var(--black);
+  padding: 2rem;
+  background: var(--white);
+  position: relative;
+}
+
+.reason-card::before {
+  content: "⬢";
+  font-size: 3rem;
+  color: var(--honey);
+  position: absolute;
+  top: -2.75rem;
+  left: -1.63rem;
+  padding: 0 0.5rem;
+}
+
+.reason-card h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+/* FEATURES SECTION */
+.features {
+  max-width: 1400px;
+  margin: 6rem auto;
+  padding: 0 2rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.feature-card {
+  border: 4px solid var(--white);
+  padding: 2.5rem;
+  background: var(--gray);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 30px) 0,
+    100% 30px,
+    100% 100%,
+    30px 100%,
+    0 calc(100% - 30px)
+  );
+}
+
+.feature-card:hover {
+  background: var(--honey);
+  color: var(--black);
+  border-color: var(--black);
+}
+
+.feature-icon {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  object-fit: contain;
+}
+
+.feature-card:hover .feature-icon {
+  filter: brightness(0) invert(1);
+}
+
+.feature-card h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+/* PRICING SECTION */
+.pricing {
+  max-width: 1400px;
+  margin: 6rem auto;
+  padding: 0 2rem;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.price-card {
+  border: 4px solid var(--white);
+  padding: 2.5rem;
+  background: var(--black);
+  position: relative;
+}
+
+.price-card.featured {
+  background: var(--honey);
+  color: var(--black);
+  border-color: var(--black);
+  transform: scale(1.05);
+  box-shadow: 12px 12px 0 var(--white);
+}
+
+.tier-name {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.price {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.features-list {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.features-list li {
+  padding: 0.5rem 0;
+  border-bottom: 2px solid currentColor;
+}
+
+.features-list li::before {
+  content: "⬢ ";
+  color: var(--honey);
+}
+
+.price-card.featured .features-list li::before {
+  color: var(--black);
+}
+
+/* FOOTER */
+footer {
+  border-top: 4px solid var(--white);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 6rem;
+}
+
+footer p {
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .nav-links a {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cta-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+}
