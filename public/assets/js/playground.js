@@ -210,7 +210,10 @@ generatePodcastBtn.addEventListener("click", async () => {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error || "Failed to generate podcast");
+      const errorMessage = error.details
+        ? `${error.error || "Failed to generate podcast"} (${error.details})`
+        : error.error || "Failed to generate podcast";
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();

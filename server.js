@@ -40,6 +40,11 @@ const CONFIG = {
 
 // Initialize Google Cloud Text-to-Speech client
 let ttsClient;
+let ttsDiagnostics = {
+  mode: "adc_or_path",
+  credentialEnvDetected: false,
+  initError: null,
+};
 
 function parseCredentialEnv(raw) {
   if (!raw || typeof raw !== "string") return null;
@@ -63,13 +68,21 @@ const ttsCredsFromPrimaryEnv = parseCredentialEnv(
 );
 
 if (ttsCredsFromJsonEnv || ttsCredsFromPrimaryEnv) {
+  ttsDiagnostics.credentialEnvDetected = true;
   try {
     ttsClient = new textToSpeech.TextToSpeechClient({
       credentials: ttsCredsFromJsonEnv || ttsCredsFromPrimaryEnv,
     });
+    ttsDiagnostics.mode = ttsCredsFromJsonEnv
+      ? "credentials_json_env"
+      : "credentials_env";
     console.log("TTS client initialized from environment credentials");
   } catch (e) {
-    console.error("Failed to initialize TTS client from env credentials:", e.message);
+    ttsDiagnostics.initError = e.message;
+    console.error(
+      "Failed to initialize TTS client from env credentials:",
+      e.message
+    );
     ttsClient = new textToSpeech.TextToSpeechClient();
   }
 } else {
@@ -381,6 +394,7 @@ app.post("/api/generate-podcast", rateLimit, async (req, res) => {
     res.status(500).json({
       error: "Failed to generate podcast. Please try again.",
       details: error.message,
+      code: error.code || null,
     });
   }
 });
@@ -462,15 +476,12 @@ app.get("/api/health", async (req, res) => {
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: process.env.NODE_ENV || "development",
+    tts: {
+      mode: ttsDiagnostics.mode,
+      credentialEnvDetected: ttsDiagnostics.credentialEnvDetected,
+      initError: ttsDiagnostics.initError,
+    },
   };
-
-  // Check if TTS client is initialized
-  try {
-    health.tts = "configured";
-  } catch (error) {
-    health.tts = "error";
-    health.status = "degraded";
-  }
 
   res.json(health);
 });

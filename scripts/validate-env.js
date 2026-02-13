@@ -8,7 +8,7 @@ try {
 } catch {}
 
 function validateEnvironment() {
-  const required = ["GEMINI_API_KEY", "GOOGLE_APPLICATION_CREDENTIALS"];
+  const required = ["GEMINI_API_KEY"];
 
   const missing = [];
   const warnings = [];
@@ -20,8 +20,17 @@ function validateEnvironment() {
     }
   }
 
-  // Check Google Cloud credentials file exists
-  if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+  const hasPathCreds = Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+  const hasJsonCreds = Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+
+  if (!hasPathCreds && !hasJsonCreds) {
+    warnings.push(
+      "Google TTS credentials missing: set GOOGLE_APPLICATION_CREDENTIALS (path) or GOOGLE_APPLICATION_CREDENTIALS_JSON (JSON string)"
+    );
+  }
+
+  // Check Google Cloud credentials file exists when using path-based creds
+  if (hasPathCreds) {
     const fs = require("fs");
     if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
       warnings.push(
