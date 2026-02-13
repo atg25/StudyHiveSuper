@@ -2,7 +2,7 @@
 
 An AI-powered study tool that turns your lecture notes into summaries, flashcards, and audio podcasts.
 
-Built by NJIT IT310 Capstone Group 9.
+Initially built by Capstone Group 9, super charged by Andrew Gardner.
 
 ## What It Does
 
@@ -130,14 +130,6 @@ Change the PORT number in your .env file to something else like 3001.
 
 Make sure you have the google-tts-credentials.json file in the right place and that the Cloud Text-to-Speech API is turned on in your Google Cloud project.
 
-## Team
-
-NJIT IT310 Capstone Group 9:
-
-- Andrew Gardner
-- Jovan Fernandez
-- Umar Farooq
-- Elliot Cecere
 
 ## License
 
