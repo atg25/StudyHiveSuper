@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Your StudyHive Account" />
+    <link rel="icon" href="assets/icons/hexagon.svg" />
+    <title>Account - STUDYHIVE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/landing.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="index.html" class="logo"
+          ><img
+            src="assets/icons/hexagon.svg"
+            alt=""
+            style="
+              width: 24px;
+              height: 24px;
+              vertical-align: middle;
+              margin-right: 8px;
+              margin-bottom: 8px;
+            "
+          />STUDYHIVE</a
+        >
+        <ul class="nav-links">
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="playground.html">Playground</a></li>
+          <li><a href="account.html">Account</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero" style="min-height: 80vh; padding-top: 4rem">
+      <div style="max-width: 800px; margin: 0 auto; padding: 2rem">
+        <h1 style="font-size: 3rem; margin-bottom: 3rem">MY ACCOUNT</h1>
+
+        <div
+          style="
+            border: 4px solid var(--white);
+            padding: 2rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <h2
+            style="
+              font-family: 'Space Grotesk', sans-serif;
+              font-size: 1.5rem;
+              margin-bottom: 1.5rem;
+              text-transform: uppercase;
+            "
+          >
+            Account Details
+          </h2>
+
+          <div style="display: grid; gap: 1rem">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                padding: 1rem;
+                background: var(--gray);
+              "
+            >
+              <span style="font-weight: 600">Username:</span>
+              <span id="accountUsername">-</span>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                padding: 1rem;
+                background: var(--gray);
+              "
+            >
+              <span style="font-weight: 600">Plan:</span>
+              <span id="accountPlan" style="color: var(--honey)">-</span>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                padding: 1rem;
+                background: var(--gray);
+              "
+            >
+              <span style="font-weight: 600">Member Since:</span>
+              <span id="accountDate">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            border: 4px solid var(--white);
+            padding: 2rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <h2
+            style="
+              font-family: 'Space Grotesk', sans-serif;
+              font-size: 1.5rem;
+              margin-bottom: 1.5rem;
+              text-transform: uppercase;
+            "
+          >
+            Plan Features
+          </h2>
+
+          <ul id="planFeatures" style="list-style: none; padding: 0">
+            <!-- Features will be populated by JavaScript -->
+          </ul>
+        </div>
+
+        <button
+          id="logoutBtn"
+          class="btn"
+          style="width: 100%; padding: 1.5rem; font-size: 1.1rem"
+        >
+          LOG OUT
+        </button>
+      </div>
+    </section>
+
+    <script src="assets/js/auth.js"></script>
+    <script>
+      // Check if user is logged in
+      const user = getCurrentUser();
+      if (!user) {
+        window.location.href = "signin.html";
+      }
+
+      // Display account info
+      document.getElementById("accountUsername").textContent = user.username;
+      document.getElementById("accountPlan").textContent =
+        user.plan.toUpperCase();
+      document.getElementById("accountDate").textContent = new Date(
+        user.createdAt
+      ).toLocaleDateString();
+
+      // Plan features
+      const features = {
+        free: [
+          "included: 5 AI summaries per month",
+          "included: Basic flashcard generation",
+          "included: Community access",
+          "not included: Podcast generation",
+          "not included: Priority support",
+        ],
+        plus: [
+          "included: 50 AI summaries per month",
+          "included: Advanced flashcard generation",
+          "included: Podcast generation (5/month)",
+          "included: Community access",
+          "included: Email support",
+        ],
+        premium: [
+          "included: Unlimited AI summaries",
+          "included: Advanced flashcard generation",
+          "included: Unlimited podcast generation",
+          "included: Priority community access",
+          "included: 24/7 priority support",
+          "included: Early access to new features",
+        ],
+      };
+
+      const planFeaturesList = document.getElementById("planFeatures");
+      features[user.plan].forEach((feature) => {
+        const li = document.createElement("li");
+        li.textContent = feature;
+        li.style.padding = "0.75rem";
+        li.style.borderBottom = "1px solid var(--gray)";
+        planFeaturesList.appendChild(li);
+      });
+
+      // Logout
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        logout();
+        window.location.href = "index.html";
+      });
+    </script>
+  </body>
+</html>

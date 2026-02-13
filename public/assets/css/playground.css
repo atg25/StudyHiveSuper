@@ -47,12 +47,6 @@ nav {
   text-decoration: none;
 }
 
-.logo::before {
-  content: "⬢";
-  color: var(--honey);
-  margin-right: 0.5rem;
-}
-
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -666,10 +660,12 @@ audio {
 }
 
 .feature-list li::before {
-  content: "⬢ ";
-  color: var(--honey);
-  font-size: 1.2rem;
+  content: url("../icons/hexagon.svg");
+  display: inline-block;
+  width: 8px;
+  height: 8px;
   margin-right: 0.5rem;
+  vertical-align: middle;
 }
 
 /* TOAST NOTIFICATION */

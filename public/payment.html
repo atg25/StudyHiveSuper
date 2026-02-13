@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Complete your StudyHive payment" />
+    <link rel="icon" href="assets/icons/hexagon.svg" />
+    <title>Payment - STUDYHIVE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/landing.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="index.html" class="logo"
+          ><img
+            src="assets/icons/hexagon.svg"
+            alt=""
+            style="
+              width: 24px;
+              height: 24px;
+              vertical-align: middle;
+              margin-right: 8px;
+              margin-bottom: 8px;
+            "
+          />STUDYHIVE</a
+        >
+        <ul class="nav-links">
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="playground.html">Playground</a></li>
+          <li><a href="account.html">Account</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section
+      class="hero"
+      style="
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div style="max-width: 600px; width: 100%; padding: 2rem">
+        <h1 style="font-size: 3rem; margin-bottom: 2rem">COMPLETE PAYMENT</h1>
+
+        <div
+          style="
+            border: 4px solid var(--white);
+            padding: 2rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <h2
+            style="
+              font-family: 'Space Grotesk', sans-serif;
+              font-size: 1.5rem;
+              margin-bottom: 1rem;
+              text-transform: uppercase;
+            "
+          >
+            Order Summary
+          </h2>
+
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              padding: 1rem;
+              background: var(--gray);
+              margin-bottom: 1rem;
+            "
+          >
+            <span style="font-weight: 600">Plan:</span>
+            <span id="planName" style="color: var(--honey)">-</span>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              padding: 1rem;
+              background: var(--gray);
+              margin-bottom: 1rem;
+            "
+          >
+            <span style="font-weight: 600">Price:</span>
+            <span id="planPrice" style="color: var(--honey)">-</span>
+          </div>
+
+          <div
+            style="
+              border-top: 2px solid var(--white);
+              padding-top: 1rem;
+              margin-top: 1rem;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-size: 1.2rem;
+                font-weight: 600;
+              "
+            >
+              <span>Total:</span>
+              <span id="totalPrice" style="color: var(--honey)">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PayPal-style payment form -->
+        <div
+          style="
+            border: 4px solid var(--white);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <h3
+            style="
+              font-family: 'Space Grotesk', sans-serif;
+              font-size: 1.3rem;
+              margin-bottom: 2rem;
+              text-transform: uppercase;
+              text-align: center;
+            "
+          >
+            Payment Information
+          </h3>
+
+          <form
+            id="paymentForm"
+            style="display: flex; flex-direction: column; gap: 1.5rem"
+          >
+            <div>
+              <label
+                style="
+                  display: block;
+                  margin-bottom: 0.5rem;
+                  font-weight: 600;
+                  font-size: 0.9rem;
+                "
+                >EMAIL</label
+              >
+              <input
+                type="email"
+                id="email"
+                required
+                placeholder="your@email.com"
+                style="
+                  width: 100%;
+                  padding: 1rem;
+                  background: var(--gray);
+                  border: 2px solid var(--white);
+                  color: var(--white);
+                  font-family: 'Inter', sans-serif;
+                  font-size: 1rem;
+                "
+              />
+            </div>
+
+            <div>
+              <label
+                style="
+                  display: block;
+                  margin-bottom: 0.5rem;
+                  font-weight: 600;
+                  font-size: 0.9rem;
+                "
+                >CARD NUMBER</label
+              >
+              <input
+                type="text"
+                id="cardNumber"
+                required
+                placeholder="1234 5678 9012 3456"
+                maxlength="19"
+                style="
+                  width: 100%;
+                  padding: 1rem;
+                  background: var(--gray);
+                  border: 2px solid var(--white);
+                  color: var(--white);
+                  font-family: 'JetBrains Mono', monospace;
+                  font-size: 1rem;
+                  letter-spacing: 2px;
+                "
+              />
+            </div>
+
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem"
+            >
+              <div>
+                <label
+                  style="
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                  "
+                  >EXPIRY</label
+                >
+                <input
+                  type="text"
+                  id="expiry"
+                  required
+                  placeholder="MM/YY"
+                  maxlength="5"
+                  style="
+                    width: 100%;
+                    padding: 1rem;
+                    background: var(--gray);
+                    border: 2px solid var(--white);
+                    color: var(--white);
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 1rem;
+                  "
+                />
+              </div>
+
+              <div>
+                <label
+                  style="
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                  "
+                  >CVV</label
+                >
+                <input
+                  type="text"
+                  id="cvv"
+                  required
+                  placeholder="123"
+                  maxlength="3"
+                  style="
+                    width: 100%;
+                    padding: 1rem;
+                    background: var(--gray);
+                    border: 2px solid var(--white);
+                    color: var(--white);
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 1rem;
+                  "
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="btn"
+              style="
+                width: 100%;
+                padding: 1.5rem;
+                font-size: 1.1rem;
+                margin-top: 1rem;
+              "
+            >
+              COMPLETE PAYMENT
+            </button>
+          </form>
+        </div>
+
+        <p
+          style="
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.6;
+          "
+        >
+          Secure payment powered by PayPal
+        </p>
+      </div>
+    </section>
+
+    <script src="assets/js/auth.js"></script>
+    <script>
+      // Get payment info from URL or localStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const plan = urlParams.get("plan") || "plus";
+
+      const planDetails = {
+        plus: { name: "Plus", price: "9.99" },
+        premium: { name: "Premium", price: "19.99" },
+      };
+
+      const currentPlan = planDetails[plan];
+      document.getElementById("planName").textContent = currentPlan.name;
+      document.getElementById(
+        "planPrice"
+      ).textContent = `$${currentPlan.price}/month`;
+      document.getElementById(
+        "totalPrice"
+      ).textContent = `$${currentPlan.price}/month`;
+
+      // Format card number input
+      document.getElementById("cardNumber").addEventListener("input", (e) => {
+        let value = e.target.value.replace(/\s/g, "");
+        let formattedValue = value.match(/.{1,4}/g)?.join(" ") || value;
+        e.target.value = formattedValue;
+      });
+
+      // Format expiry input
+      document.getElementById("expiry").addEventListener("input", (e) => {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length >= 2) {
+          value = value.slice(0, 2) + "/" + value.slice(2, 4);
+        }
+        e.target.value = value;
+      });
+
+      // Handle payment form submission
+      document.getElementById("paymentForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Simulate payment processing
+        const btn = e.target.querySelector("button");
+        btn.textContent = "PROCESSING...";
+        btn.disabled = true;
+
+        setTimeout(() => {
+          // Update user plan
+          const user = getCurrentUser();
+          if (user) {
+            user.plan = plan;
+            localStorage.setItem("currentUser", JSON.stringify(user));
+
+            const users = JSON.parse(localStorage.getItem("users") || "{}");
+            if (users[user.username]) {
+              users[user.username].plan = plan;
+              localStorage.setItem("users", JSON.stringify(users));
+            }
+          }
+
+          alert("Payment successful! Welcome to StudyHive " + currentPlan.name);
+          window.location.href = "account.html";
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>

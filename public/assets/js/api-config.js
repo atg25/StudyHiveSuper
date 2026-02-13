@@ -1,10 +1,5 @@
-// API Configuration
-// Automatically detects environment and uses appropriate API URL
-
 const API_CONFIG = {
-  // Use environment variable if set, otherwise detect from hostname
   getBaseURL() {
-    // Local-only mode: always talk to local server
     return "http://localhost:3000";
   },
 

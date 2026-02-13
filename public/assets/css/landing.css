@@ -43,12 +43,8 @@ nav {
   font-weight: 700;
   letter-spacing: -2px;
   position: relative;
-}
-
-.logo::before {
-  content: "⬢";
-  color: var(--honey);
-  margin-right: 0.5rem;
+  color: var(--white);
+  text-decoration: none;
 }
 
 .nav-links {
@@ -212,13 +208,12 @@ h2 {
 }
 
 .reason-card::before {
-  content: "⬢";
-  font-size: 3rem;
-  color: var(--honey);
+  content: url("../icons/hexagon.svg");
   position: absolute;
-  top: -2.75rem;
-  left: -1.63rem;
-  padding: 0 0.5rem;
+  top: -0.5rem;
+  left: -0.5rem;
+  width: 16px;
+  height: 16px;
 }
 
 .reason-card h3 {
@@ -334,8 +329,12 @@ h2 {
 }
 
 .features-list li::before {
-  content: "⬢ ";
-  color: var(--honey);
+  content: url("../icons/hexagon.svg");
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 .price-card.featured .features-list li::before {
