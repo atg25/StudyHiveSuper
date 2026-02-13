@@ -1,6 +1,14 @@
 const API_CONFIG = {
   getBaseURL() {
-    return "http://localhost:3000";
+    if (typeof window !== "undefined") {
+      const isLocalHost =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+
+      return isLocalHost ? "http://localhost:3000" : window.location.origin;
+    }
+
+    return process.env.API_BASE_URL || "http://localhost:3000";
   },
 
   get BASE_URL() {
