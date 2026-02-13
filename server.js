@@ -15,7 +15,10 @@ if (!process.env.GEMINI_API_KEY) {
   process.exit(1);
 }
 
-if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+if (
+  !process.env.GOOGLE_APPLICATION_CREDENTIALS &&
+  !process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+) {
   console.warn("GOOGLE_APPLICATION_CREDENTIALS not set");
   console.warn("TTS features may not work without Google Cloud credentials");
 }
@@ -37,17 +40,36 @@ const CONFIG = {
 
 // Initialize Google Cloud Text-to-Speech client
 let ttsClient;
-// Prefer JSON credentials from env (Vercel friendly)
-if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+
+function parseCredentialEnv(raw) {
+  if (!raw || typeof raw !== "string") return null;
+
   try {
-    const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
-    ttsClient = new textToSpeech.TextToSpeechClient({ credentials: creds });
-    console.log("TTS client initialized from env JSON");
+    const parsed = JSON.parse(raw);
+    if (parsed?.private_key && typeof parsed.private_key === "string") {
+      parsed.private_key = parsed.private_key.replace(/\\n/g, "\n");
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+const ttsCredsFromJsonEnv = parseCredentialEnv(
+  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+);
+const ttsCredsFromPrimaryEnv = parseCredentialEnv(
+  process.env.GOOGLE_APPLICATION_CREDENTIALS
+);
+
+if (ttsCredsFromJsonEnv || ttsCredsFromPrimaryEnv) {
+  try {
+    ttsClient = new textToSpeech.TextToSpeechClient({
+      credentials: ttsCredsFromJsonEnv || ttsCredsFromPrimaryEnv,
+    });
+    console.log("TTS client initialized from environment credentials");
   } catch (e) {
-    console.error(
-      "Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:",
-      e.message
-    );
+    console.error("Failed to initialize TTS client from env credentials:", e.message);
     ttsClient = new textToSpeech.TextToSpeechClient();
   }
 } else {
